@@ -83,14 +83,11 @@ spec:
     - mountPath: /ssh
       name: ssh
       readOnly: true
-    workingDir: $(workspaces.source.path)
   volumes:
   - emptyDir: {}
-    name: varlibcontainers
+    name: workspace
   - name: ssh
     secret:
       optional: false
       secretName: multi-platform-ssh-$(context.taskRun.name)
-  workspaces:
-  - description: Workspace containing the source code to build.
-    name: source
+
