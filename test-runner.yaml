@@ -53,21 +53,28 @@ spec:
       mkdir -p scripts
       echo "$BUILD_DIR"
       ssh $SSH_ARGS "$SSH_HOST"  mkdir -p "$BUILD_DIR/workspaces" "$BUILD_DIR/scripts" "$BUILD_DIR/tmp"
-
-      rsync -ra $(workspaces.source.path)/ "$SSH_HOST:$BUILD_DIR/workspaces/source/"
+      echo -e  $(uname -m)
+      
+      # transfers data
+      # rsync -ra $(workspaces.source.path)/ "$SSH_HOST:$BUILD_DIR/workspaces/source/"
+      
+      # writes the script to the remote host
       cat >scripts/script-build.sh <<'REMOTESSHEOF'
-      #!/bin/sh
+      
+      !/bin/sh
       set -o verbose
-      cd $(workspaces.source.path)
-      if [ -z "$CONFIG_FILE" ] ; then
-        CONFIG_FILE_ARG=""
-      else
-        CONFIG_FILE_ARG="  --image-config=source/$CONFIG_FILE "
-      fi
+      echo -e  $(uname -m)
+      
+      # cd $(workspaces.source.path)
+      # if [ -z "$CONFIG_FILE" ] ; then
+      #  CONFIG_FILE_ARG=""
+      # else
+      #  CONFIG_FILE_ARG="  --image-config=source/$CONFIG_FILE "
+      #fi
 
       
       # rpm-ostree compose image --initialize --format oci $CONFIG_FILE_ARG "source/$IMAGE_FILE" rhtap-final-image
-      # REMOTESSHEOF
+      REMOTESSHEOF
       # will add test script runner here
       
       # Hardcode result for now.
