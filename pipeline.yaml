@@ -17,16 +17,13 @@ metadata:
   namespace: brianwcook-tenant
 spec:
   params:
-  - name: dockerfile
-    value: Containerfile
   - name: git-url
     value: '{{source_url}}'
-  - name: output-image
-    value: quay.io/redhat-user-workloads/brianwcook-tenant/konflux-arm64-test-demo/arm64-test-demo:{{revision}}
-  - name: path-context
-    value: .
   - name: revision
     value: '{{revision}}'
+  - name: platform
+    value: '{{platform}}'
+    description: architecture to execute the test pipeline on
   pipelineSpec:
     finally:
       - name: show-sbom
