@@ -78,8 +78,8 @@ spec:
         add:
         - SETFCAP
     volumeMounts:
-    - mountPath: /var/lib/containers
-      name: varlibcontainers
+    - mountPath: /workspace
+      name: workspace
     - mountPath: /ssh
       name: ssh
       readOnly: true
