@@ -88,7 +88,8 @@ spec:
       # execute the script in a container on the SSH host
       ssh $SSH_ARGS "$SSH_HOST" podman  run \
       -e PARAM_BUILDER_IMAGE="quay.io/brianwcook/jq-ubi9:latest" \
-       --user=0  --rm  "$BUILDER_IMAGE" /scripts/script-build.sh
+      -v $BUILD_DIR/scripts:/script:Z \
+      --user=0  --rm  "$BUILDER_IMAGE" /script/script-build.sh
 
 
 
