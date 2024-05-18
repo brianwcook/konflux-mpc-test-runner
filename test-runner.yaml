@@ -82,7 +82,8 @@ spec:
       # The remote script gets excecuted inside a container on the remote host here.
       chmod +x scripts/script-build.sh
       rsync -ra scripts "$SSH_HOST:$BUILD_DIR"
-      ssh $SSH_ARGS "$SSH_HOST" $PORT_FORWARD podman  run $PODMAN_PORT_FORWARD \
+      ssh $SSH_ARGS "$SSH_HOST" $PORT_FORWARD podman  run \
+      -e PARAM_BUILDER_IMAGE="quay.io/brianwcook/jq-ubi9:latest" \
        --user=0  --rm  "$BUILDER_IMAGE" /script/script-build.sh
       # rsync -ra "$SSH_HOST:$BUILD_DIR/workspaces/source/" "$(workspaces.source.path)/"
       # rsync -ra "$SSH_HOST:$BUILD_DIR/tekton-results/" "/tekton/results/"
