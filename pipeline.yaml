@@ -20,23 +20,6 @@ spec:
     type: string
     default: "linux/amd64"
     description: architecture to execute the test pipeline on
-  workspaces:
-    - name: workspace
-      volumeClaimTemplate:
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-    - name: workspace-arm64
-      volumeClaimTemplate:
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
   tasks:
     - name: init
       params:
@@ -53,78 +36,19 @@ spec:
           - name: kind
             value: task
         resolver: bundles
-    - name: clone-repository
-      params:
-        - name: url
-          value: $(params.git-url)
-        - name: revision
-          value: $(params.revision)
-      runAfter:
-        - init
-      taskRef:
-        params:
-          - name: name
-            value: git-clone
-          - name: bundle
-            value: quay.io/redhat-appstudio-tekton-catalog/task-git-clone:0.1@sha256:30709df067659a407968154fd39e99763823d8ecfc6b5cd00a55b68818ec94ba
-          - name: kind
-            value: task
-        resolver: bundles
-      when:
-        - input: $(tasks.init.results.build)
-          operator: in
-          values:
-            - "true"
-      workspaces:
-        - name: output
-          workspace: workspace
-    - name: clone-repository-arm64
-      params:
-        - name: url
-          value: $(params.git-url)
-        - name: revision
-          value: $(params.revision)
-      runAfter:
-        - init
-      taskRef:
-        kind: Task
-        params:
-          - name: name
-            value: git-clone
-          - name: bundle
-            value: quay.io/redhat-appstudio-tekton-catalog/task-git-clone:0.1@sha256:30709df067659a407968154fd39e99763823d8ecfc6b5cd00a55b68818ec94ba
-          - name: kind
-            value: task
-        resolver: bundles
-      when:
-        - input: $(tasks.init.results.build)
-          operator: in
-          values:
-            - "true"
-      workspaces:
-        - name: output
-          workspace: workspace-arm64
     - name: build-container-arm64
       params:
         - name: PLATFORM
           value: linux/arm64
       runAfter:
-        - clone-repository-arm64
+        - init
       taskRef:
         resolver: git
         params:
         - name: url
-          value: https://github.com/tektoncd/catalog.git
+          value: https://github.com/brianwcook/konflux-mpc-test-runner
         - name: revision
           value: main
         - name: pathInRepo
-          value: task/git-clone/0.6/git-clone.yaml
-      when:
-        - input: $(tasks.init.results.build)
-          operator: in
-          values:
-            - "true"
-      workspaces:
-        - name: source
-          workspace: workspace-arm64
+          value: test-runner.yaml
 status: {}
