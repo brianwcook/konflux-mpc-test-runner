@@ -19,11 +19,14 @@ spec:
   params:
   - name: git-url
     value: '{{source_url}}'
+    type: string
   - name: revision
     value: '{{revision}}'
     default: main
+    type: string
   - name: platform
     value: '{{platform}}'
+    type: string
     description: architecture to execute the test pipeline on
   pipelineSpec:
     finally:
