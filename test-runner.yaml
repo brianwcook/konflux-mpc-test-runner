@@ -72,6 +72,8 @@ spec:
       #  CONFIG_FILE_ARG="  --image-config=source/$CONFIG_FILE "
       #fi
 
+      PORT_FORWARD=""
+
       # rpm-ostree compose image --initialize --format oci $CONFIG_FILE_ARG "source/$IMAGE_FILE" rhtap-final-image
       
       REMOTESSHEOF
@@ -81,21 +83,6 @@ spec:
       chmod +x scripts/script-build.sh
       rsync -ra scripts "$SSH_HOST:$BUILD_DIR"
       ssh $SSH_ARGS "$SSH_HOST" $PORT_FORWARD podman  run $PODMAN_PORT_FORWARD \
-       -e BUILDAH_FORMAT="$BUILDAH_FORMAT" \
-       -e STORAGE_DRIVER="$STORAGE_DRIVER" \
-       -e HERMETIC="$HERMETIC" \
-       -e CONTEXT="$CONTEXT" \
-       -e DOCKERFILE="$DOCKERFILE" \
-       -e IMAGE="$IMAGE" \
-       -e TLSVERIFY="$TLSVERIFY" \
-       -e IMAGE_EXPIRES_AFTER="$IMAGE_EXPIRES_AFTER" \
-       -e YUM_REPOS_D_SRC="$YUM_REPOS_D_SRC" \
-       -e YUM_REPOS_D_FETCHED="$YUM_REPOS_D_FETCHED" \
-       -e YUM_REPOS_D_TARGET="$YUM_REPOS_D_TARGET" \
-       -e TARGET_STAGE="$TARGET_STAGE" \
-       -e PARAM_BUILDER_IMAGE="$PARAM_BUILDER_IMAGE" \
-       -e ENTITLEMENT_SECRET="$ENTITLEMENT_SECRET" \
-       -e BUILD_ARGS_FILE="$BUILD_ARGS_FILE" \
        --user=0  --rm  "$BUILDER_IMAGE" /script/script-build.sh
       # rsync -ra "$SSH_HOST:$BUILD_DIR/workspaces/source/" "$(workspaces.source.path)/"
       # rsync -ra "$SSH_HOST:$BUILD_DIR/tekton-results/" "/tekton/results/"
