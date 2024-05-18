@@ -1,29 +1,24 @@
 apiVersion: tekton.dev/v1
 kind: Pipeline
 metadata:
-  annotations:
-    build.appstudio.openshift.io/repo: https://github.com/brianwcook/konflux-arm64-test-demo?rev={{revision}}
-    build.appstudio.redhat.com/commit_sha: '{{revision}}'
-    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
-    pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main"
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: konflux-arm64-test-demo
     appstudio.openshift.io/component: arm64-test-demo
     pipelines.appstudio.openshift.io/type: build
-  name: arm64-test-demo-on-push
+  name: mpc-test-pipeline
   namespace: brianwcook-tenant
 spec:
   params:
   - name: git-url
     type: string
+    default: ""
   - name: revision
-    default: main
+    default: "main"
     type: string
   - name: platform
     type: string
+    default: "linux/amd64"
     description: architecture to execute the test pipeline on
   pipelineSpec:
     finally:
