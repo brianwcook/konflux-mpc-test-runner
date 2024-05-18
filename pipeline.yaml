@@ -46,14 +46,6 @@ spec:
   tasks:
     - name: init
       params:
-        - name: image-url
-          value: $(params.output-image)
-        - name: rebuild
-          value: $(params.rebuild)
-        - name: skip-checks
-          value: $(params.skip-checks)
-        - name: skip-optional
-          value: $(params.skip-optional)
         - name: pipelinerun-name
           value: $(context.pipelineRun.name)
         - name: pipelinerun-uid
@@ -120,8 +112,6 @@ spec:
           workspace: workspace-arm64
     - name: build-container-arm64
       params:
-        - name: CONTEXT
-          value: $(params.path-context)
         - name: PLATFORM
           value: linux/arm64
       runAfter:
