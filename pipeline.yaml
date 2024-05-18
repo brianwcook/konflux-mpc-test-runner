@@ -21,6 +21,7 @@ spec:
     value: '{{source_url}}'
   - name: revision
     value: '{{revision}}'
+    default: main
   - name: platform
     value: '{{platform}}'
     description: architecture to execute the test pipeline on
