@@ -11,12 +11,6 @@ metadata:
 spec:
   description: test-runner-mpc
   params:
-  - description: the git repo where the test script is located
-    name: GIT_URL
-    type: string
-  - description: The test script to run
-    name: TEST_SCRIPT
-    type: string
   - description: The platform to build on
     name: PLATFORM
     type: string
