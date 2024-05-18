@@ -1,5 +1,5 @@
 apiVersion: tekton.dev/v1
-kind: PipelineRun
+kind: Pipeline
 metadata:
   annotations:
     build.appstudio.openshift.io/repo: https://github.com/brianwcook/konflux-arm64-test-demo?rev={{revision}}
