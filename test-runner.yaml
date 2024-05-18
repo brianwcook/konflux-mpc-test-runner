@@ -74,6 +74,7 @@ spec:
 
       
       # rpm-ostree compose image --initialize --format oci $CONFIG_FILE_ARG "source/$IMAGE_FILE" rhtap-final-image
+      
       REMOTESSHEOF
       # will add test script runner here
       
