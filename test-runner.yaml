@@ -56,8 +56,9 @@ spec:
       mkdir -p scripts
       echo "$BUILD_DIR"
       ssh $SSH_ARGS "$SSH_HOST"  mkdir -p "$BUILD_DIR/workspaces" "$BUILD_DIR/scripts" "$BUILD_DIR/tmp"
-      echo -e  $(uname -m)
-      
+      echo -e local arch is: $(uname -m)
+      ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "printf remote-arch-$(uname -m)"
+
       # transfers data
       # rsync -ra $(workspaces.source.path)/ "$SSH_HOST:$BUILD_DIR/workspaces/source/"
       
