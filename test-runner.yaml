@@ -17,7 +17,7 @@ spec:
   stepTemplate:
     env:
     - name: BUILDER_IMAGE
-      value: quay.io/bcook/jq-ubi9:latest
+      value: quay.io/bcook/jq-ubi9@sha256:a158a654d0c82556256090b7cbfd66db58c39b8f594d69ef8c420a1a1e0b3b77
     computeResources: {}
   steps:
   - env:
@@ -87,7 +87,7 @@ spec:
       
       # execute the script in a container on the SSH host
       ssh $SSH_ARGS "$SSH_HOST" podman  run \
-      -e PARAM_BUILDER_IMAGE="quay.io/brianwcook/jq-ubi9:latest" \
+      -e PARAM_BUILDER_IMAGE="quay.io/bcook/jq-ubi9@sha256:a158a654d0c82556256090b7cbfd66db58c39b8f594d69ef8c420a1a1e0b3b77" \
       -v $BUILD_DIR/scripts:/script:Z \
       --user=0  --rm  "$BUILDER_IMAGE" /script/script-build.sh
 
