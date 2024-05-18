@@ -15,6 +15,9 @@ spec:
     name: PLATFORM
     type: string
   stepTemplate:
+  -env:
+    - name: BUILDER_IMAGE
+      value: quay.io/bcook/jq-ubi9:latest
     computeResources: {}
   steps:
   - env:
