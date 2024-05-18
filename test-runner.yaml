@@ -15,11 +15,6 @@ spec:
     name: PLATFORM
     type: string
   stepTemplate:
-    env:
-    - name: GIT_URL
-      value: $(params.GIT_URL)
-    - name: TEST_SCRIPT
-      value: $(params.TEST_SCRIPT)
     computeResources: {}
   steps:
   - env:
