@@ -24,7 +24,7 @@ spec:
     - name: mpc-run-test
       params:
         - name: PLATFORM
-          value: linux/arm64
+          value: linux/amd64
       taskRef:
         resolver: git
         params:
