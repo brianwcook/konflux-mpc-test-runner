@@ -66,7 +66,7 @@ spec:
       # write the script to disk:
       cat >scripts/script-build.sh <<'REMOTESSHEOF'
       
-      #!/bin/sh
+      #!/bin/bash
       set -o verbose
       echo -e  $(uname -m)
       
