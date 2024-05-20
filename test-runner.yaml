@@ -86,6 +86,12 @@ spec:
       # sync scripts dir to the SSH Host
       rsync -ra scripts "$SSH_HOST:$BUILD_DIR"
       
+      # for debugging
+      ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "ls -al /scripts"
+      ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "cat /script/script-build.sh"
+      
+
+
       # execute the script in a container on the SSH host
       ssh $SSH_ARGS "$SSH_HOST" podman  run \
       -e PARAM_BUILDER_IMAGE="quay.io/bcook/jq-ubi9:latest" \
