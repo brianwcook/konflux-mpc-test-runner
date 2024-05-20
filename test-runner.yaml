@@ -67,6 +67,7 @@ spec:
       cat >scripts/script-build.sh <<'REMOTESSHEOF'
       #!/bin/bash
       set -o verbose
+      echo 'script-build.sh start'
       echo -e  $(uname -m)
       
       # cd $(workspaces.source.path)
@@ -78,6 +79,7 @@ spec:
 
       # rpm-ostree compose image --initialize --format oci $CONFIG_FILE_ARG "source/$IMAGE_FILE" rhtap-final-image
       
+      echo 'script-build.sh end'
       REMOTESSHEOF
       
       # make it executable
@@ -87,7 +89,7 @@ spec:
       rsync -ra scripts "$SSH_HOST:$BUILD_DIR"
       
       # for debugging
-      ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "ls -al /scripts"
+      ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "ls -alR /scripts"
       ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "cat /script/script-build.sh"
       
 
