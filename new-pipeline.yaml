@@ -4,8 +4,6 @@ metadata:
   name: build-pipeline
 spec:
   params:
-    - name: output-image
-      value: "quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/$(context.pipelineRun.name)"
     - name: platform
       type: string
       default: "linux/amd64"
@@ -30,9 +28,8 @@ spec:
         - name: revision
           value: "$(params.revision)"
         - name: ociStorage
-          value: "$(params.output-image).git"
-        - name: output-image
-          value: "$(params.output-image)"
+          value: "quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/$(context.pipelineRun.name).git"
+          
         - name: ociArtifactExpiresAfter
           value: 5d
     - name: mpc-run-test
