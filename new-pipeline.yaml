@@ -4,16 +4,16 @@ metadata:
   name: build-pipeline
 spec:
   params:
-  - name: output-image
-    value: "quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/$(context.pipelineRun.name)"
-  - name: platform
-    type: string
-    default: "linux/amd64"
-  - name: git-url
-    type: string
-  - name: revision
-    type: string  
-    default: main
+    - name: output-image
+      value: "quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/$(context.pipelineRun.name)"
+    - name: platform
+      type: string
+      default: "linux/amd64"
+    - name: git-url
+      type: string
+    - name: revision
+      type: string  
+      default: main
   tasks:
     - name: clone-repository
       taskRef:
