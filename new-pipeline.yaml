@@ -12,7 +12,7 @@ spec:
   - name: revision
     type: string  
     default: main
-  - name: output-location
+  - name: output-image
     value: quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/my-component
   tasks:
     - name: init
@@ -28,10 +28,8 @@ spec:
       params:
       - name: image-url
         value: "$(params.output-image)"
-      - name: rebuild
-        value: "$(params.rebuild)"
       - name: skip-checks
-        value: "$(params.skip-checks)"
+        default: false
     - name: clone-repository
       taskRef:
         resolver: bundles
@@ -55,7 +53,7 @@ spec:
       - name: revision
         value: "$(params.revision)"
       - name: ociStorage
-        value: "$(params.output-image).$(context.pipeline.name)-git"
+        value: "$(params.output-image).git"
       - name: ociArtifactExpiresAfter
         value: 5d
       workspaces:
