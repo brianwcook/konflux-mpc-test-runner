@@ -15,19 +15,38 @@ spec:
   - name: output-image
     value: quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/my-component
   tasks:
-    - name: init
+    - name: clone-repository
       taskRef:
         resolver: bundles
         params:
         - name: name
-          value: init
+          value: git-clone-oci-ta
         - name: bundle
-          value: quay.io/redhat-appstudio-tekton-catalog/task-init:0.2@sha256:686109bd8088258f73211618824aee5d3cf9e370f65fa3e85d361790a54260ef
+          value: quay.io/redhat-appstudio-tekton-catalog/task-git-clone-oci-ta:0.1@sha256:e3490635200600da4a6b2997b0cf8e65e012155e7795824aa36d858a890ad31f
         - name: kind
           value: task
       params:
-      - name: image-url
-        value: "$(params.output-image)"
-      - name: skip-checks
-        default: false
-   
+      - name: url
+        value: "$(params.git-url)"
+      - name: revision
+        value: "$(params.revision)"
+      - name: ociStorage
+        value: "$(params.output-image).git"
+      - name: ociArtifactExpiresAfter
+        value: 5d
+      workspaces:
+      - name: basic-auth
+        workspace: git-auth
+    - name: mpc-run-test
+      params:
+        - name: PLATFORM
+          value: $(params.platform)
+      taskRef:
+        resolver: git
+        params:
+        - name: url
+          value: https://github.com/brianwcook/konflux-mpc-test-runner
+        - name: revision
+          value: main
+        - name: pathInRepo
+          value: test-runner.yaml
