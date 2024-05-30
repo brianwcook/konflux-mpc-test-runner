@@ -14,6 +14,9 @@ spec:
   - description: The platform to build on
     name: PLATFORM
     type: string
+  results:
+    - name: TEST_OUTPUT
+      description: the konflux test output string
   stepTemplate:
     env:
     - name: BUILDER_IMAGE
@@ -93,7 +96,6 @@ spec:
       ssh $SSH_ARGS "$SSH_HOST" /bin/bash -c "cat /script/script-build.sh"
       
 
-
       # execute the script in a container on the SSH host
       ssh $SSH_ARGS "$SSH_HOST" podman  run \
       -e PARAM_BUILDER_IMAGE="quay.io/bcook/jq-ubi9:latest" \
@@ -113,8 +115,15 @@ spec:
       # buildah mount "$container" | tee /workspace/container_path
       # echo $container > /workspace/container_name
 
+      env
+      
       # Hardcode result for now.
       RESULT=SUCCESS
+
+      # emit a result like:
+      # TEST_OUTPUT:	{"timestamp":"1717031352","namespace":"","successes":20,"failures":0,"warnings":0,"result":"SUCCESS"}
+       
+      echo -n "{"timestamp":"${date +%s}","namespace":"","successes":${success},"failures":"","warnings":0,"result":${RESULT}}" > "$(results.TEST_OUTPUT.path)"
 
     securityContext:
       capabilities:
