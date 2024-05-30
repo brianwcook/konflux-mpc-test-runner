@@ -12,6 +12,8 @@ spec:
   - name: revision
     type: string  
     default: main
+  - name: output-location
+    value: quay.io/redhat-user-workloads/brianwcook-tenant/trusted-artifacts/my-component
   tasks:
     - name: init
       taskRef:
@@ -53,9 +55,9 @@ spec:
       - name: revision
         value: "$(params.revision)"
       - name: ociStorage
-        value: "$(params.output-image).git"
+        value: "$(params.output-image).$(context.pipeline.name)-git"
       - name: ociArtifactExpiresAfter
-        value: "$(params.image-expires-after)"
+        value: 5d
       workspaces:
       - name: basic-auth
         workspace: git-auth
